@@ -1,15 +1,15 @@
-# SOP — 从零到复现曲线(README 流程的逐步展开)
+# 流程记录 — 我们如何从零跑出参考曲线
 
-> 成本参考:我们在 4×H100 上一次 150 步训练 ≤24h;每个 checkpoint 的 140 局评测单卡 vLLM 约 20 分钟。
+> 成本参考:150 步训练在 4×H100 上 ≤24h;每个 checkpoint 的 140 局评测,单卡 vLLM 约 20 分钟。
 
 ## 1. 环境
 
-1. Python 3.12;`pip install -r requirements-eval.txt`。**`vllm==0.8.5`、`transformers==4.51.3` 请钉死**(transformers 升级实测会碰 Qwen2Tokenizer 兼容问题)。训练侧依赖由贵侧框架自定。
-2. 下载 ALFWorld 数据 **json_2.1.1**(`alfworld-download` 或既有拷贝),`export ALFWORLD_DATA=<数据根>`。
+- Python 3.12;评测侧依赖见 `requirements-eval.txt`。其中 **`vllm==0.8.5`、`transformers==4.51.3` 是钉死的**——transformers 升级实测碰到过 Qwen2Tokenizer 兼容问题。
+- ALFWorld 数据 **json_2.1.1**,`ALFWORLD_DATA` 指向数据根。
 
-## 2. 训练数据子集(为了曲线可比,请保持一致)
+## 2. 训练数据子集
 
-参考曲线的训练采样使用一个**固定的 train 子集**,用仓库内脚本 + 冻结清单构造:
+参考曲线的训练采样来自一个固定的 train 子集,构造方式:
 
 ```bash
 python3 selfevolve/make_scene_holdout.py \
@@ -18,13 +18,14 @@ python3 selfevolve/make_scene_holdout.py \
   --out <路径>/alfworld_train_subset
 ```
 
-训练 rollout 从这棵树的 train split 采样。清单为冻结版本,直接使用即可,无需重新生成。
+清单文件是冻结版本;三次参考训练用的是同一棵树。
 
-## 3. Step-0 校验(请务必先过再开训)
+## 3. Step-0 检查(我们每次训练前都先跑)
 
-**目的:证明"贵侧 serve 的模型 + 本仓库评测器"能复现我们的基线读数;这一步不过,后面的曲线就失去可比性了。**
+用评测器测一遍**未训练的基座**,确认整条链路(模型服务 + prompt + 数据 + 评测器)与参考读数一致:
 
 ```bash
+# 我们的做法:vLLM 起基座;任何 OpenAI 兼容端点等效
 vllm serve Qwen/Qwen2.5-7B-Instruct --port 8901
 python3 selfevolve/bootstrap.py \
   --base-url http://127.0.0.1:8901/v1 \
@@ -32,49 +33,38 @@ python3 selfevolve/bootstrap.py \
   --out out/step0
 ```
 
-**通过判据**:日志出现 `COVERAGE_OK`(140 局全部枚举完成);胜局 **10–11/140**。
-若未通过,建议暂缓训练,按 §7 排查(九成是 prompt/版本问题)——这一步排查通常十分钟,比训完再发现失配省得多。
+参考读数:`COVERAGE_OK` + **10–11/140**。这个数不对时,我们的经验是先修链路再训练——训练后的曲线差异会与链路失配混在一起,无法归因。
 
-## 4. 训练(贵侧框架)
+## 4. 训练
 
-- 超参逐行对照 `spec/recipe.md`(语义栏是为非 verl 框架准备的翻译)。
-- **prompt 必须逐字节一致**:优先直接 `import` 本仓库 `agent_system/environments/prompts/alfworld` 的模板;若自行实现,请按 `spec/prompt_protocol.md` 对拍。
-- **每 10 步保存一个 HF 可加载的 checkpoint**(评测要逐个 serve)。
-- 建议记录的训练遥测:每步 invalid-action 率。参考值:step-0 为 0.575/步,**训练后 20 步内应降到 ≈0**——这是最灵敏的早期对齐信号。
+- 超参:`spec/recipe.md` 冻结表,与三次参考训练逐行一致。
+- prompt:训练与评测用同一份模板(`agent_system/environments/prompts/alfworld.py`);跨框架复现时模板逐字节一致是曲线可比的前提,对拍方法见 `spec/prompt_protocol.md`。
+- checkpoint:每 10 步保存一个(HF 可加载格式,评测要逐个 serve)。
+- 我们记录的训练遥测:每步 invalid-action 率(0.575/步 → 20 步内 ≈0)。
 
 ## 5. 逐 checkpoint 评测
 
-对每个 checkpoint(s10, s20, …, s150):
-
-```bash
-vllm serve <ckpt_path> --port 8901
-python3 selfevolve/bootstrap.py \
-  --base-url http://127.0.0.1:8901/v1 \
-  --enumerate --split eval_in_distribution --rollout-temp 0.0 \
-  --out out/probe_s<step>
-```
-
-- 每次评测须出现 `COVERAGE_OK`;产物 `games_round1.jsonl`(140 行逐局结果)请全部保留——万一要逐局对账,它是最小单位。
+对 s10, s20, …, s150 逐个执行与 §3 相同的评测命令(换模型端点与 `--out`)。每次评测以 `COVERAGE_OK` 为完成标志;产物 `games_round1.jsonl`(140 行逐局结果)我们全部留档——逐局是对账的最小单位。
 
 ## 6. 对表
 
-1. step→wins/140 对照 `reference/reference_curve.csv`。判读按强度排序:
-   - step-0 = 10–11/140(硬判据);
-   - s10–s20 落在 45–57/140 附近(我们 3 次训练:47/48/51/54);
-   - s60 前后进入 55–65% 量级(参考 run_a:87/140);
-   - s150 参考散布 [78, 117]/140,**单点请不要作成败判据**。
-2. 汇报建议的最小包:step→wins CSV + 全部 games jsonl + 贵侧配置相对 `spec/recipe.md` 的逐行 diff(一致 / 等效替代 / 做不到 三栏)。
+step→wins/140 与 `reference/reference_curve.csv` 对照。我们建议的判读顺序(按信号强度):
 
-## 7. 对不上时的排查顺序(按命中率)
+1. step-0 = 10–11/140;
+2. s10–s20 落在 45–57/140 附近(参考三跑:47/48/51/54);
+3. s60 前后进入 55–65% 量级(run_a 参考:87/140);
+4. s150 的参考散布是 [78, 117]/140——后半程 run 间方差大,单点不适合作成败判据。
 
-1. **prompt 不逐字节一致**(历史窗口、admissible actions 列表格式、`<think>/<action>` 说明、空格换行)→ 与 `reference/prompt_samples.txt` diff。
-2. 评测没走枚举 / 温度不为 0 → 确认命令行 + `COVERAGE_OK`。
-3. 数据不是 json_2.1.1,或训练未使用 §2 的固定子集。
+## 7. 失配排查经验(按我们实际踩坑的频率排序)
+
+1. **prompt 非逐字节一致**(历史窗口、admissible actions 列表格式、`<think>/<action>` 说明、空格换行)→ 与 `reference/prompt_samples.txt` 逐字符 diff。
+2. 评测未走枚举 / 温度不为 0(抽样≠枚举)→ 核对命令行与 `COVERAGE_OK`。
+3. 数据不是 json_2.1.1,或训练数据不是 §2 的固定子集。
 4. `transformers`/`vllm` 版本漂移(tokenizer 行为变化)。
-5. invalid action 的判定与惩罚语义不同(见 recipe 表对应行)。
-6. 以上排除后仍差 → 烦请把贵侧的 games jsonl 与训练遥测发给我们,我们一起逐局对差异局。
+5. invalid action 的判定与惩罚语义差异(见 recipe 表对应行)。
+6. 以上全排除仍差:双方交换逐局 jsonl 与训练遥测,按局对差异,通常几局就能定位。
 
 ## 8. 噪声底
 
-- 同 checkpoint 重复评测:±2pp(我们实测重复三次差 ±4 局)。
-- 单点差 <4pp 不构成结论;曲线形状(step-0 → 前 60 步爬坡)比任何单点都重要。
+- 同 checkpoint 重复评测:±2pp(实测三次复测差 ±4 局)。
+- 单点差 <4pp 不构成结论;曲线形状(step-0 → 前 60 步爬坡)比任何单点都可靠。
