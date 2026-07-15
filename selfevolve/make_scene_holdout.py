@@ -25,9 +25,9 @@ Tree construction (--dst):
 
 Run ON RORQUAL (login node, stdlib only):
   python3 selfevolve/make_scene_holdout.py \
-      --src /project/def-jbyu/$USER/boerz/alfworld_data \
-      --dst /project/def-jbyu/$USER/boerz/alfworld_data_trainsplit \
-      --manifest /project/def-jbyu/$USER/boerz/alfworld_data_trainsplit/scene_holdout_manifest.json
+      --src <data-root>/alfworld_data \
+      --dst <data-root>/alfworld_data_trainsplit \
+      --manifest <data-root>/alfworld_data_trainsplit/scene_holdout_manifest.json
 """
 import argparse
 import json

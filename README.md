@@ -44,5 +44,5 @@ python3 selfevolve/bootstrap.py --base-url http://127.0.0.1:8901/v1 \
 
 ## 说明
 
-- `selfevolve/scene_holdout_manifest.frozen.json` 中的本地集群路径已规范化为占位符,功能字段未动;.py 代码文件与原仓库逐字节一致。
+- 代码与产出参考曲线的仓库逐字节一致,仅两个文件的**注释**中的本地集群路径/机器名替换为占位符(功能零改动);`scene_holdout_manifest.frozen.json` 的路径字段同样已规范化,功能字段未动。`MANIFEST.sha256` 以本仓库文件为准,供传输完整性校验。
 - License:Apache 2.0(`LICENSE`、`Notice.txt`;环境与训练栈源自 verl-agent/GiGPO 生态)。

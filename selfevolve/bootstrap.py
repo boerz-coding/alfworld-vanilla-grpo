@@ -42,7 +42,7 @@ from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
 
 # textworld's PDDL grammar parser is a module-global tatsu instance and is NOT
 # thread-safe: concurrent load/reset AND step (textgen grammar) corrupt its rule stack
-# ("IndexError: pop from empty list" observed on Rorqual smoke 15448260).
+# ("IndexError: pop from empty list" observed in a smoke run).
 # ALL textworld interactions (construct/reset/step) must hold this lock.
 ENV_LOAD_LOCK = threading.Lock()
 
@@ -58,7 +58,7 @@ ALF_CONFIG_PATH = os.path.join(
 # ---------------------------------------------------------------------- #
 # Heavy repo/runtime imports are guarded so that `--help` (and py_compile)
 # works on machines without alfworld / openai / torch installed. Actual
-# runs must happen where the SkillRL stack is installed (e.g. Rorqual).
+# runs must happen where the full stack is installed.
 # ---------------------------------------------------------------------- #
 try:
     from openai import OpenAI
