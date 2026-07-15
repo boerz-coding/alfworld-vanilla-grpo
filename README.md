@@ -53,6 +53,6 @@ python3 selfevolve/bootstrap.py --base-url http://127.0.0.1:8901/v1 \
 
 ## 说明
 
-- 代码与产出参考曲线的仓库逐字节一致,仅两个文件**注释**中的本地集群路径/机器名替换为占位符(功能零改动);
+- 代码与产出参考曲线的仓库逐字节一致,仅两个文件**注释**中的本地集群路径/机器名替换为占位符(功能零改动)。
 - 逐局明细(每局 won/steps/actions 的 jsonl)未随仓库发布,需要时可提供。
 - License:Apache 2.0(`LICENSE`、`Notice.txt`;环境与训练栈源自 verl-agent/GiGPO 生态)。
