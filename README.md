@@ -35,7 +35,17 @@ python3 selfevolve/bootstrap.py --base-url http://127.0.0.1:8901/v1 \
 
 - 超参冻结表:`spec/recipe.md`(verl 原始写法 + 各参数语义,便于翻译到其他训练框架)。
 - prompt 模板:`agent_system/environments/prompts/alfworld.py`(与训练/评测同一份);逐字节协议与实测失配案例见 `spec/prompt_protocol.md`,训练期 dump 的逐字样本在 `reference/prompt_samples.txt`。
-- 训练数据:ALFWorld **json_2.1.1** train split 的固定子集(2162/2435 任务目录,约标准 train 的 89%),由 `selfevolve/make_scene_holdout.py` + 冻结清单 `selfevolve/scene_holdout_manifest.frozen.json` 构造。该子集源于我们另一组实验的特殊设计(预留了部分场景),对本复现而言只是固定的训练采样范围;参考曲线的三次训练均出自该子集。评测集不受影响:valid_seen 全量 140 局。
+- **训练数据(容易漏,单独说)**:训练采样用的不是完整 train split,而是一个固定子集(2162/2435 任务目录,约 89%)。该子集源于我们另一组实验的特殊设计(预留了部分场景),对本复现而言只是固定的训练采样范围;参考曲线的三次训练均出自该子集。评测集不受影响:valid_seen 全量 140 局。训练前先构造(一次性):
+
+  ```bash
+  python3 selfevolve/make_scene_holdout.py \
+    --data $ALFWORLD_DATA \
+    --manifest selfevolve/scene_holdout_manifest.frozen.json \
+    --out <路径>/alfworld_train_subset
+  # 生成新数据目录:train/ 只含保留任务,valid_seen 等原样可用;
+  # 此后训练与评测的 ALFWORLD_DATA 都指向这个新目录。
+  ```
+
 - 每 10 步保存一个 checkpoint,逐个评测得到曲线。
 
 ## 复现对照点(我们的经验记录)
