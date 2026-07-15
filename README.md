@@ -2,6 +2,8 @@
 
 本仓库是一份可复现的实验记录:在 **ALFWorld(TextWorld 文字环境)** 上用 **vanilla GRPO** 训练 **Qwen2.5-7B-Instruct**,包含我们的训练配置、评测器和参考曲线(raw data)。
 
+> **基座模型:`Qwen/Qwen2.5-7B-Instruct`(全参微调,非 LoRA)· 算法:GRPO · 环境:ALFWorld json_2.1.1 · 评测:valid_seen 140 局枚举,greedy**
+
 ## 结果
 
 140 局固定评测集(枚举、greedy 解码)上的胜局数(/140)随训练步数,三次训练逐点列出。run_a 每 10 步有探针;run_b/run_c 当时只在 s10/s20/s140/s150 打了探针,故有空格:
