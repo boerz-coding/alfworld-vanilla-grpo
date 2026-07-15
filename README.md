@@ -35,7 +35,7 @@ python3 selfevolve/bootstrap.py --base-url http://127.0.0.1:8901/v1 \
 
 ## 训练配置
 
-- 超参冻结表:`spec/recipe.md`(verl 原始写法 + 各参数语义,便于翻译到其他训练框架)。
+- 超参冻结表:`spec/recipe.md`(verl 原始写法 + 各参数语义,便于翻译到其他训练框架);实跑命令原文:`spec/verl_command.md`。训练遥测(train/val success、KL、entropy 等,TensorBoard 导出)在 `reference/telemetry/`。
 - prompt 模板:`agent_system/environments/prompts/alfworld.py`(与训练/评测同一份);逐字节协议与实测失配案例见 `spec/prompt_protocol.md`,训练期 dump 的逐字样本在 `reference/prompt_samples.txt`。
 - **训练数据(容易漏,单独说)**:训练采样用的不是完整 train split,而是一个固定子集(2162/2435 任务目录,约 89%)。该子集源于我们另一组实验的特殊设计(预留了部分场景),对本复现而言只是固定的训练采样范围;参考曲线的三次训练均出自该子集。评测集不受影响:valid_seen 全量 140 局。训练前先构造(一次性):
 
@@ -62,9 +62,10 @@ python3 selfevolve/bootstrap.py --base-url http://127.0.0.1:8901/v1 \
 |---|---|
 | `SOP.md` | 我们端到端流程的逐步记录 + 失配排查经验 |
 | `spec/recipe.md` | 训练超参冻结表 |
+| `spec/verl_command.md` | 实跑 verl 命令原文 + 训练遥测说明 |
 | `spec/prompt_protocol.md` | prompt 逐字节协议 |
 | `agent_system/`, `selfevolve/` | 评测器及依赖(代码原样隔离,见 `MANIFEST.sha256`) |
-| `reference/` | 参考曲线 CSV/PNG + prompt 逐字样本 + 140 局评测集清单 |
+| `reference/` | 参考曲线 CSV/PNG + prompt 逐字样本 + 140 局评测集清单 + 训练遥测(`telemetry/`) |
 | `requirements-eval.txt` | 评测侧依赖(版本钉死项见注释) |
 
 ## 说明
