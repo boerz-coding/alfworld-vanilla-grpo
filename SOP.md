@@ -9,7 +9,7 @@
 
 ## 2. 训练数据子集
 
-参考曲线的训练采样来自一个固定的 train 子集,构造方式:
+参考曲线的训练采样来自 train split 的一个固定子集(2162/2435 任务目录,约 89%;评测集 valid_seen 不受影响,全量 140 局),构造方式:
 
 ```bash
 python3 selfevolve/make_scene_holdout.py \
@@ -40,7 +40,6 @@ python3 selfevolve/bootstrap.py \
 - 超参:`spec/recipe.md` 冻结表,与三次参考训练逐行一致。
 - prompt:训练与评测用同一份模板(`agent_system/environments/prompts/alfworld.py`);跨框架复现时模板逐字节一致是曲线可比的前提,对拍方法见 `spec/prompt_protocol.md`。
 - checkpoint:每 10 步保存一个(HF 可加载格式,评测要逐个 serve)。
-- 我们记录的训练遥测:每步 invalid-action 率(0.575/步 → 20 步内 ≈0)。
 
 ## 5. 逐 checkpoint 评测
 

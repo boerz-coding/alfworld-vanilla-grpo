@@ -31,15 +31,14 @@ python3 selfevolve/bootstrap.py --base-url http://127.0.0.1:8901/v1 \
 
 - 超参冻结表:`spec/recipe.md`(verl 原始写法 + 各参数语义,便于翻译到其他训练框架)。
 - prompt 模板:`agent_system/environments/prompts/alfworld.py`(与训练/评测同一份);逐字节协议与实测失配案例见 `spec/prompt_protocol.md`,训练期 dump 的逐字样本在 `reference/prompt_samples.txt`。
-- 训练数据:ALFWorld **json_2.1.1** 的一个固定 train 子集,由 `selfevolve/make_scene_holdout.py` + 冻结清单 `selfevolve/scene_holdout_manifest.frozen.json` 构造(参考曲线的训练采样均出自该子集)。
+- 训练数据:ALFWorld **json_2.1.1** train split 的一个固定子集(2162/2435 任务目录,约 89%;评测集不受影响,valid_seen 全量 140 局)。参考曲线的训练采样均出自该子集;构造方式:`selfevolve/make_scene_holdout.py` + 冻结清单 `selfevolve/scene_holdout_manifest.frozen.json`。
 - 每 10 步保存一个 checkpoint,逐个评测得到曲线。
 
 ## 复现对照点(我们的经验记录)
 
 1. **step-0**:冻结基座在本评测器下 = **10–11/140(7.1–7.9%)**。我们每次训练前都先跑一遍这个数;它不对,说明 prompt/版本/数据有失配,训练后的曲线也不会可比。
-2. **invalid-action 率**:step-0 为 0.575/步,训练后 **20 步内降到 ≈0**——最灵敏的早期对齐信号。
-3. **前半程锚点**:s10–s20 我们三次训练为 47/48/51/54(/140)。
-4. 失配时的高频原因排序(我们踩过的):prompt 非逐字节一致 > 评测未走枚举/温度非 0 > 数据子集不一致 > `transformers`/`vllm` 版本漂移(我们钉在 4.51.3 / 0.8.5)> invalid-action 语义差异。细节见 `SOP.md` §7。
+2. **前半程锚点**:s10–s20 我们三次训练为 47/48/51/54(/140)。
+3. 失配时的高频原因排序(我们踩过的):prompt 非逐字节一致 > 评测未走枚举/温度非 0 > 训练数据不一致 > `transformers`/`vllm` 版本漂移(我们钉在 4.51.3 / 0.8.5)> invalid-action 语义差异。细节见 `SOP.md` §7。
 
 ## 目录
 
