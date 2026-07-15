@@ -70,6 +70,10 @@ python3 -m verl.trainer.main_ppo \
 
 环境变量:`ALFWORLD_DATA` 指向 SOP §2 构造出的数据目录;`HF_HOME` 按各自环境;离线集群上我们另设 `HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 WANDB_MODE=offline`。
 
+## 版本说明(2026-07-15 补)
+
+训练侧实际运行环境:**torch 2.9.0 / vllm 0.11.2 / transformers 4.57.6 / flash-attn 2.8.3 / verl 0.3.1.dev0(repo 自带)**;参考曲线的探针也运行于该栈。`requirements-eval.txt` 给出的 vllm 0.8.5 / transformers 4.51.3 是另一套**经 step-0 校验等价**的评测组合(我们在另一台机器的复测电池用它,step-0 同样得 10–12/140)。评测环境两套任选,以 step-0 门为准。
+
 ## 训练遥测(wandb 未用,tensorboard 全量记录)
 
 日志器为 `['console','tensorboard']`(集群无外网,wandb 走不了在线);wandb 会记的量 TensorBoard 全有(84 个 scalar tag)。三次参考训练的关键遥测已导出:
