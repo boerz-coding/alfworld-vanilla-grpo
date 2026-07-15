@@ -12,9 +12,9 @@
 ## 自检方法(二选一,推荐 A)
 
 - **A(零风险)**:训练 harness 直接 `from agent_system.environments.prompts.alfworld import ...` 复用本仓库的模板/构造逻辑。
-- **B(自行实现)**:训练首步把你们拼出的 prompt dump 下来,与 `reference/prompt_samples.txt` **逐字符 diff**(空格、换行、引号、方括号都算),diff 干净再开训。
+- **B(自行实现)**:训练首步把贵侧拼出的 prompt dump 下来,与 `reference/prompt_samples.txt` **逐字符 diff**(空格、换行、引号、方括号都算),diff 干净再开训。
 
 ## 生成侧约定
 
-- 动作解析:取 `<action></action>` 内文本作为环境动作;非法/不可解析按 recipe 表的 invalid-penalty 语义处理;评测器自行统计 `n_invalid`,无需你们干预。
+- 动作解析:取 `<action></action>` 内文本作为环境动作;非法/不可解析按 recipe 表的 invalid-penalty 语义处理;评测器自行统计 `n_invalid`,无需额外干预。
 - Chat template:走 Qwen2.5-Instruct tokenizer 自带的官方 chat template,不要手拼 system/user 包装——这也是钉死 `transformers==4.51.3` 的原因之一。
