@@ -31,7 +31,7 @@ python3 selfevolve/bootstrap.py --base-url http://127.0.0.1:8901/v1 \
 
 - 超参冻结表:`spec/recipe.md`(verl 原始写法 + 各参数语义,便于翻译到其他训练框架)。
 - prompt 模板:`agent_system/environments/prompts/alfworld.py`(与训练/评测同一份);逐字节协议与实测失配案例见 `spec/prompt_protocol.md`,训练期 dump 的逐字样本在 `reference/prompt_samples.txt`。
-- 训练数据:ALFWorld **json_2.1.1** 标准 train split;评测 valid_seen 全量 140 局。一处披露:参考曲线的三次训练实际用了 train 的一个 89% 固定子集(2162/2435 任务目录,内部流水线设置;子集清单可提供)——step-0 与评测协议不受影响,全量训练的曲线预计略高、差异应在 run 间散布之内。
+- 训练数据:ALFWorld **json_2.1.1** train split 的固定子集(2162/2435 任务目录,约标准 train 的 89%),由 `selfevolve/make_scene_holdout.py` + 冻结清单 `selfevolve/scene_holdout_manifest.frozen.json` 构造;参考曲线的三次训练均出自该子集。评测集不受影响:valid_seen 全量 140 局。
 - 每 10 步保存一个 checkpoint,逐个评测得到曲线。
 
 ## 复现对照点(我们的经验记录)

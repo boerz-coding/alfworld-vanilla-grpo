@@ -19,7 +19,7 @@
 | 训练采样温度 | rollout 默认 | 未显式设置(verl 默认) | 评测温度与此无关(评测器固定 0.0) |
 | 单局步数上限 | `env.max_steps` | **50** | 50 步未完成判负 |
 | 环境 | `env.env_name` | `alfworld/AlfredTWEnv` | TextWorld 文字版 ALFRED |
-| 训练数据 | `ALFWORLD_DATA` | ALFWorld json_2.1.1 train split | 披露:参考曲线实际用了 89% 固定子集,见 SOP §2 |
+| 训练数据 | `ALFWORLD_DATA` | 固定 train 子集(SOP §2) | 构造脚本 + 冻结清单随仓库提供,与参考曲线一致 |
 | 总步数 | `trainer.total_epochs` | **150** | 每步新采样 |
 | 存档频率 | `trainer.save_freq` | **10** | 每 10 步一个 checkpoint |
 | env seed | `env.seed` | 0 / 1 / 2 | 参考曲线三次训练分别用的种子 |
