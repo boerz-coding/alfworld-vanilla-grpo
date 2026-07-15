@@ -1,0 +1,33 @@
+{
+  "frozen_date": "2026-07-11",
+  "rule": "11 held-out scenes; families alphabetical (bath,bedroom,kitchen,living) take k=(2,3,3,3); random.Random(0).sample over the ascending-sorted scene list per family; scene = trailing int of train task dir name",
+  "seed": 0,
+  "holdout_scenes": {
+    "bath": [
+      414,
+      428
+    ],
+    "bedroom": [
+      302,
+      310,
+      316
+    ],
+    "kitchen": [
+      15,
+      18,
+      19
+    ],
+    "living": [
+      210,
+      229,
+      230
+    ]
+  },
+  "n_scenes_total": 108,
+  "n_taskdirs_kept": 2162,
+  "n_taskdirs_dropped": 273,
+  "n_files_linked": 14448,
+  "n_games_kept": 3120,
+  "src": "/project/def-jbyu/sty123/boerz/alfworld_data",
+  "dst": "/project/def-jbyu/sty123/boerz/alfworld_data_trainsplit"
+}

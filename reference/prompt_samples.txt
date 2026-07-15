@@ -1,0 +1,252 @@
+
+===== prompt sample (init=True) =====
+
+You are an expert agent operating in the ALFRED Embodied Environment.
+Your current observation is: -= Welcome to TextWorld, ALFRED! =-
+
+You are in the middle of a room. Looking quickly around you, you see a bed 1, a desk 1, a drawer 3, a drawer 2, a drawer 1, a garbagecan 1, a safe 1, a shelf 5, a shelf 4, a shelf 3, a shelf 2, a shelf 1, a sidetable 2, and a sidetable 1.
+
+Your task is to: look at pillow under the desklamp.
+Your admissible actions of the current situation are: ['go to bed 1'
+ 'go to desk 1'
+ 'go to drawer 1'
+ 'go to drawer 2'
+ 'go to drawer 3'
+ 'go to garbagecan 1'
+ 'go to safe 1'
+ 'go to shelf 1'
+ 'go to shelf 2'
+ 'go to shelf 3'
+ 'go to shelf 4'
+ 'go to shelf 5'
+ 'go to sidetable 1'
+ 'go to sidetable 2'
+ 'inventory'
+ 'look'].
+
+Now it's your turn to take an action.
+You should first reason step-by-step about the current situation. This reasoning process MUST be enclosed within <think> </think> tags. 
+Once you've finished your reasoning, you should choose an admissible action for current step and present it within <action> </action> tags.
+
+
+===== prompt sample (init=False) =====
+
+You are an expert agent operating in the ALFRED Embodied Environment. Your task is to: look at pillow under the desklamp.
+Prior to this step, you have already taken 1 step(s). Below are the most recent 1 observations and the corresponding actions you took: [Observation 1: '-= Welcome to TextWorld, ALFRED! =-
+
+You are in the middle of a room. Looking quickly around you, you see a bed 1, a desk 1, a drawer 3, a drawer 2, a drawer 1, a garbagecan 1, a safe 1, a shelf 5, a shelf 4, a shelf 3, a shelf 2, a shelf 1, a sidetable 2, and a sidetable 1.
+
+Your task is to: look at pillow under the desklamp.', Action 1: '[action] go to bed 1 [/action]']
+You are now at step 2 and your current observation is: Nothing happens.
+Your admissible actions of the current situation are: ['go to bed 1'
+ 'go to desk 1'
+ 'go to drawer 1'
+ 'go to drawer 2'
+ 'go to drawer 3'
+ 'go to garbagecan 1'
+ 'go to safe 1'
+ 'go to shelf 1'
+ 'go to shelf 2'
+ 'go to shelf 3'
+ 'go to shelf 4'
+ 'go to shelf 5'
+ 'go to sidetable 1'
+ 'go to sidetable 2'
+ 'inventory'
+ 'look'].
+
+Now it's your turn to take an action.
+You should first reason step-by-step about the current situation. This reasoning process MUST be enclosed within <think> </think> tags.
+Once you've finished your reasoning, you should choose an admissible action for current step and present it within <action> </action> tags.
+
+
+===== prompt sample (init=False) =====
+
+You are an expert agent operating in the ALFRED Embodied Environment. Your task is to: look at pillow under the desklamp.
+Prior to this step, you have already taken 2 step(s). Below are the most recent 2 observations and the corresponding actions you took: [Observation 1: '-= Welcome to TextWorld, ALFRED! =-
+
+You are in the middle of a room. Looking quickly around you, you see a bed 1, a desk 1, a drawer 3, a drawer 2, a drawer 1, a garbagecan 1, a safe 1, a shelf 5, a shelf 4, a shelf 3, a shelf 2, a shelf 1, a sidetable 2, and a sidetable 1.
+
+Your task is to: look at pillow under the desklamp.', Action 1: '[action] go to bed 1 [/action]']
+[Observation 2: 'Nothing happens.', Action 2: 'action] go to desk 1 [/action]']
+You are now at step 3 and your current observation is: Nothing happens.
+Your admissible actions of the current situation are: ['go to bed 1'
+ 'go to desk 1'
+ 'go to drawer 1'
+ 'go to drawer 2'
+ 'go to drawer 3'
+ 'go to garbagecan 1'
+ 'go to safe 1'
+ 'go to shelf 1'
+ 'go to shelf 2'
+ 'go to shelf 3'
+ 'go to shelf 4'
+ 'go to shelf 5'
+ 'go to sidetable 1'
+ 'go to sidetable 2'
+ 'inventory'
+ 'look'].
+
+Now it's your turn to take an action.
+You should first reason step-by-step about the current situation. This reasoning process MUST be enclosed within <think> </think> tags.
+Once you've finished your reasoning, you should choose an admissible action for current step and present it within <action> </action> tags.
+
+
+===== prompt sample (init=False) =====
+
+You are an expert agent operating in the ALFRED Embodied Environment. Your task is to: look at pillow under the desklamp.
+Prior to this step, you have already taken 3 step(s). Below are the most recent 2 observations and the corresponding actions you took: [Observation 2: 'Nothing happens.', Action 2: 'action] go to desk 1 [/action]']
+[Observation 3: 'Nothing happens.', Action 3: 'tion] look at desk 1 [/action]']
+You are now at step 4 and your current observation is: Nothing happens.
+Your admissible actions of the current situation are: ['go to bed 1'
+ 'go to desk 1'
+ 'go to drawer 1'
+ 'go to drawer 2'
+ 'go to drawer 3'
+ 'go to garbagecan 1'
+ 'go to safe 1'
+ 'go to shelf 1'
+ 'go to shelf 2'
+ 'go to shelf 3'
+ 'go to shelf 4'
+ 'go to shelf 5'
+ 'go to sidetable 1'
+ 'go to sidetable 2'
+ 'inventory'
+ 'look'].
+
+Now it's your turn to take an action.
+You should first reason step-by-step about the current situation. This reasoning process MUST be enclosed within <think> </think> tags.
+Once you've finished your reasoning, you should choose an admissible action for current step and present it within <action> </action> tags.
+
+
+===== prompt sample (init=True) =====
+
+You are an expert agent operating in the ALFRED Embodied Environment.
+Your current observation is: -= Welcome to TextWorld, ALFRED! =-
+
+You are in the middle of a room. Looking quickly around you, you see a armchair 2, a armchair 1, a coffeetable 1, a drawer 1, a garbagecan 1, a shelf 4, a shelf 3, a shelf 2, a shelf 1, a sidetable 1, a sofa 1, a tvstand 2, and a tvstand 1.
+
+Your task is to: put a newspaper in armchair.
+Your admissible actions of the current situation are: ['go to armchair 1'
+ 'go to armchair 2'
+ 'go to coffeetable 1'
+ 'go to drawer 1'
+ 'go to garbagecan 1'
+ 'go to shelf 1'
+ 'go to shelf 2'
+ 'go to shelf 3'
+ 'go to shelf 4'
+ 'go to sidetable 1'
+ 'go to sofa 1'
+ 'go to tvstand 1'
+ 'go to tvstand 2'
+ 'inventory'
+ 'look'].
+
+Now it's your turn to take an action.
+You should first reason step-by-step about the current situation. This reasoning process MUST be enclosed within <think> </think> tags. 
+Once you've finished your reasoning, you should choose an admissible action for current step and present it within <action> </action> tags.
+
+
+===== prompt sample (init=False) =====
+
+You are an expert agent operating in the ALFRED Embodied Environment. Your task is to: put a newspaper in armchair.
+Prior to this step, you have already taken 1 step(s). Below are the most recent 1 observations and the corresponding actions you took: [Observation 1: '-= Welcome to TextWorld, ALFRED! =-
+
+You are in the middle of a room. Looking quickly around you, you see a armchair 2, a armchair 1, a coffeetable 1, a drawer 1, a garbagecan 1, a shelf 4, a shelf 3, a shelf 2, a shelf 1, a sidetable 1, a sofa 1, a tvstand 2, and a tvstand 1.
+
+Your task is to: put a newspaper in armchair.', Action 1: 'n> go to sidetable 1 </action>']
+You are now at step 2 and your current observation is: Nothing happens.
+Your admissible actions of the current situation are: ['go to armchair 1'
+ 'go to armchair 2'
+ 'go to coffeetable 1'
+ 'go to drawer 1'
+ 'go to garbagecan 1'
+ 'go to shelf 1'
+ 'go to shelf 2'
+ 'go to shelf 3'
+ 'go to shelf 4'
+ 'go to sidetable 1'
+ 'go to sofa 1'
+ 'go to tvstand 1'
+ 'go to tvstand 2'
+ 'inventory'
+ 'look'].
+
+Now it's your turn to take an action.
+You should first reason step-by-step about the current situation. This reasoning process MUST be enclosed within <think> </think> tags.
+Once you've finished your reasoning, you should choose an admissible action for current step and present it within <action> </action> tags.
+
+
+===== prompt sample (init=False) =====
+
+You are an expert agent operating in the ALFRED Embodied Environment. Your task is to: put a newspaper in armchair.
+Prior to this step, you have already taken 2 step(s). Below are the most recent 2 observations and the corresponding actions you took: [Observation 1: '-= Welcome to TextWorld, ALFRED! =-
+
+You are in the middle of a room. Looking quickly around you, you see a armchair 2, a armchair 1, a coffeetable 1, a drawer 1, a garbagecan 1, a shelf 4, a shelf 3, a shelf 2, a shelf 1, a sidetable 1, a sofa 1, a tvstand 2, and a tvstand 1.
+
+Your task is to: put a newspaper in armchair.', Action 1: 'n> go to sidetable 1 </action>']
+[Observation 2: 'Nothing happens.', Action 2: 'go to coffeetable 1']
+You are now at step 3 and your current observation is: You arrive at coffeetable 1. On the coffeetable 1, you see a creditcard 3, a creditcard 2, a laptop 1, a newspaper 1, a pencil 1, a remotecontrol 2, and a tissuebox 1.
+Your admissible actions of the current situation are: ['examine coffeetable 1'
+ 'go to armchair 1'
+ 'go to armchair 2'
+ 'go to drawer 1'
+ 'go to garbagecan 1'
+ 'go to shelf 1'
+ 'go to shelf 2'
+ 'go to shelf 3'
+ 'go to shelf 4'
+ 'go to sidetable 1'
+ 'go to sofa 1'
+ 'go to tvstand 1'
+ 'go to tvstand 2'
+ 'inventory'
+ 'look'
+ 'take creditcard 2 from coffeetable 1'
+ 'take creditcard 3 from coffeetable 1'
+ 'take laptop 1 from coffeetable 1'
+ 'take newspaper 1 from coffeetable 1'
+ 'take pencil 1 from coffeetable 1'
+ 'take remotecontrol 2 from coffeetable 1'
+ 'take tissuebox 1 from coffeetable 1'].
+
+Now it's your turn to take an action.
+You should first reason step-by-step about the current situation. This reasoning process MUST be enclosed within <think> </think> tags.
+Once you've finished your reasoning, you should choose an admissible action for current step and present it within <action> </action> tags.
+
+
+===== prompt sample (init=False) =====
+
+You are an expert agent operating in the ALFRED Embodied Environment. Your task is to: put a newspaper in armchair.
+Prior to this step, you have already taken 3 step(s). Below are the most recent 2 observations and the corresponding actions you took: [Observation 2: 'Nothing happens.', Action 2: 'go to coffeetable 1']
+[Observation 3: 'You arrive at coffeetable 1. On the coffeetable 1, you see a creditcard 3, a creditcard 2, a laptop 1, a newspaper 1, a pencil 1, a remotecontrol 2, and a tissuebox 1.', Action 3: '1 from coffeetable 1 </action>']
+You are now at step 4 and your current observation is: Nothing happens.
+Your admissible actions of the current situation are: ['examine coffeetable 1'
+ 'go to armchair 1'
+ 'go to armchair 2'
+ 'go to drawer 1'
+ 'go to garbagecan 1'
+ 'go to shelf 1'
+ 'go to shelf 2'
+ 'go to shelf 3'
+ 'go to shelf 4'
+ 'go to sidetable 1'
+ 'go to sofa 1'
+ 'go to tvstand 1'
+ 'go to tvstand 2'
+ 'inventory'
+ 'look'
+ 'take creditcard 2 from coffeetable 1'
+ 'take creditcard 3 from coffeetable 1'
+ 'take laptop 1 from coffeetable 1'
+ 'take newspaper 1 from coffeetable 1'
+ 'take pencil 1 from coffeetable 1'
+ 'take remotecontrol 2 from coffeetable 1'
+ 'take tissuebox 1 from coffeetable 1'].
+
+Now it's your turn to take an action.
+You should first reason step-by-step about the current situation. This reasoning process MUST be enclosed within <think> </think> tags.
+Once you've finished your reasoning, you should choose an admissible action for current step and present it within <action> </action> tags.
+

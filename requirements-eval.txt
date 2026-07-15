@@ -1,0 +1,13 @@
+# 评测侧最小依赖(训练侧由你们框架自定)
+# —— 版本钉死项(实测踩过坑,勿升):
+vllm==0.8.5
+transformers==4.51.3
+# —— 评测器 import 链需要:
+openai
+numpy
+torch
+omegaconf
+sentence-transformers   # agent_system.memory import 链需要(评测本身不用检索)
+faiss-cpu               # 同上
+# —— ALFWorld/TextWorld(数据用 json_2.1.1):
+alfworld
