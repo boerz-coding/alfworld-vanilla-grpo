@@ -20,7 +20,7 @@ python3 selfevolve/make_scene_holdout.py \
 
 清单文件是冻结版本,直接使用即可。
 
-构造出的子集树对 valid_seen 等其余 split 做了软链,因此**训练与评测可将 `ALFWORLD_DATA` 统一指向子集树**——我们即如此运行(评测集不受裁剪影响)。
+该命令会生成一个新的数据目录(`--out` 路径):其中 `train/` 只包含保留的 2162 个任务,valid_seen 等其余 split 原样可用。**此后训练与评测把 `ALFWORLD_DATA` 都指向这个新目录即可**——我们即如此运行。
 
 ## 3. Step-0 检查(我们每次训练前都先跑)
 
